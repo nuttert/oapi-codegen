@@ -1019,6 +1019,16 @@ func GenerateStrictServer(t *template.Template, operations []OperationDefinition
 	return GenerateTemplates(templates, t, operations)
 }
 
+// GenerateRouter generates a router that distributes requests to a specific service
+func GenerateRouter(t *template.Template, ops []OperationDefinition) (string, error) {
+	return GenerateTemplates([]string{"router.tmpl"}, t, ops)
+}
+
+// GenerateNginx generates nginx proxy for services
+func GenerateNginx(t *template.Template, ops []OperationDefinition) (string, error) {
+	return GenerateTemplates([]string{"nginx-proxy.tmpl"}, t, ops)
+}
+
 func GenerateStrictResponses(t *template.Template, responses []ResponseDefinition) (string, error) {
 	return GenerateTemplates([]string{"strict/strict-responses.tmpl"}, t, responses)
 }

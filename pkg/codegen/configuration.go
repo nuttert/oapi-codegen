@@ -34,6 +34,8 @@ type GenerateOptions struct {
 	Strict        bool `yaml:"strict-server,omitempty"`  // Strict specifies whether to generate strict server wrapper
 	Client        bool `yaml:"client,omitempty"`         // Client specifies whether to generate client boilerplate
 	Models        bool `yaml:"models,omitempty"`         // Models specifies whether to generate type definitions
+	Router        bool `yaml:"router,omitempty"`         // Router specifies whether to generate router
+	Nginx         bool `yaml:"nginx,omitempty"`          // Nginx specifies whether to generate nginx proxy configuration
 	EmbeddedSpec  bool `yaml:"embedded-spec,omitempty"`  // Whether to embed the swagger spec in the generated code
 }
 

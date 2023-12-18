@@ -245,6 +245,22 @@ func Generate(spec *openapi3.T, opts Configuration) (string, error) {
 		strictServerOut = strictServerResponses + strictServerOut
 	}
 
+	var routerOut string
+	if opts.Generate.Router {
+		routerOut, err = GenerateRouter(t, ops)
+		if err != nil {
+			return "", fmt.Errorf("error generating router: %w", err)
+		}
+	}
+
+	var nginxOut string
+	if opts.Generate.Nginx {
+		routerOut, err = GenerateNginx(t, ops)
+		if err != nil {
+			return "", fmt.Errorf("error generating nginx proxy: %w", err)
+		}
+	}
+
 	var clientOut string
 	if opts.Generate.Client {
 		clientOut, err = GenerateClient(t, ops)
@@ -363,6 +379,20 @@ func Generate(spec *openapi3.T, opts Configuration) (string, error) {
 		_, err = w.WriteString(inlinedSpec)
 		if err != nil {
 			return "", fmt.Errorf("error writing inlined spec: %w", err)
+		}
+	}
+
+	if opts.Generate.Router {
+		_, err = w.WriteString(routerOut)
+		if err != nil {
+			return "", fmt.Errorf("error writing Router: %w", err)
+		}
+	}
+
+	if opts.Generate.Nginx {
+		_, err = w.WriteString(nginxOut)
+		if err != nil {
+			return "", fmt.Errorf("error writing Nginx: %w", err)
 		}
 	}
 
